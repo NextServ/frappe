@@ -186,7 +186,7 @@ doc_events = {
 		"on_update": "frappe.cache_manager.build_domain_restriced_page_cache",
 	},
 	"User": {
-		"after_insert": "frappe.lark.create_lark_user",
+		# "after_insert": "frappe.lark.create_lark_user",
 		"on_trash": "frappe.lark.delete_lark_user"
 	}
 }
