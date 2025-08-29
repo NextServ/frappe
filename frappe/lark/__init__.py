@@ -22,45 +22,45 @@ def login():
   frappe.local.response['location'] = 'https://open.larksuite.com/open-apis/authen/v1/index?redirect_uri=' + redirect_url + '&app_id=' + lark_settings.app_id
   return
 
-@frappe.whitelist(allow_guest=True)
-def login_callback():
-  lark_settings = frappe.get_doc('Lark Settings')
+# @frappe.whitelist(allow_guest=True)
+# def login_callback():
+#   lark_settings = frappe.get_doc('Lark Settings')
 
-  if frappe.form_dict.get('tenantid'):
-    lark_settings.for_tenant(frappe.form_dict.get('tenantid'))
+#   if frappe.form_dict.get('tenantid'):
+#     lark_settings.for_tenant(frappe.form_dict.get('tenantid'))
 
-  app_access_token = lark_settings.get_app_access_token()
-  code = frappe.local.request.args.get('code')
-  r = requests.post('https://open.larksuite.com/open-apis/authen/v1/access_token', json={
-    'app_access_token': app_access_token,
-    'grant_type': 'authorization_code',
-    'code': code,
-  })
-  r = r.json()
+#   app_access_token = lark_settings.get_app_access_token()
+#   code = frappe.local.request.args.get('code')
+#   r = requests.post('https://open.larksuite.com/open-apis/authen/v1/access_token', json={
+#     'app_access_token': app_access_token,
+#     'grant_type': 'authorization_code',
+#     'code': code,
+#   })
+#   r = r.json()
 
-  if (r['code'] == 0):
-    user = r['data']
+#   if (r['code'] == 0):
+#     user = r['data']
 
-    if frappe.db.exists('User Social Login', { 'provider': 'lark', 'userid': user['open_id'] }) or lark_settings.allow_new_users:
-      if frappe.form_dict.get('tenantid'):
-        user['tenantid'] = frappe.form_dict.get('tenantid')
+#     if frappe.db.exists('User Social Login', { 'provider': 'lark', 'userid': user['open_id'] }) or lark_settings.allow_new_users:
+#       if frappe.form_dict.get('tenantid'):
+#         user['tenantid'] = frappe.form_dict.get('tenantid')
 
-      frappe.utils.oauth.login_oauth_user(user, provider='lark', state={
-        'token': user['access_token']
-      })
-      return
-    else:
-      frappe.throw('You don\'t have permission to access this application.')
+#       frappe.utils.oauth.login_oauth_user(user, provider='lark', state={
+#         'token': user['access_token']
+#       })
+#       return
+#     else:
+#       frappe.throw('You don\'t have permission to access this application.')
 
-  return r
+#   return r
 
-def get_lark_settings():
-  settings = frappe.get_doc('Lark Settings')
+# def get_lark_settings():
+#   settings = frappe.get_doc('Lark Settings')
 
-  if settings and not settings.ready():
-    return None
+#   if settings and not settings.ready():
+#     return None
 
-  return settings
+#   return settings
 
 # def create_lark_user(user, method):
 #   if frappe.db.exists('User Social Login', { 'provider': 'lark', 'parent': user.name }):
