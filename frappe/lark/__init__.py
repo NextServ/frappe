@@ -8,18 +8,18 @@ __version__ = '0.0.1'
 
 @frappe.whitelist(allow_guest=True)
 def login():
-  lark_settings = frappe.get_doc('Lark Settings')
-  callback_url = '/api/method/frappe.lark.login_callback'
+  # lark_settings = frappe.get_doc('Lark Settings')
+  # callback_url = '/api/method/frappe.lark.login_callback'
 
-  if frappe.form_dict.get('tenantid'):
-    callback_url += '?tenantid=' + frappe.form_dict.get('tenantid')
-    lark_settings.for_tenant(frappe.form_dict.get('tenantid'))
+  # if frappe.form_dict.get('tenantid'):
+  #   callback_url += '?tenantid=' + frappe.form_dict.get('tenantid')
+  #   lark_settings.for_tenant(frappe.form_dict.get('tenantid'))
 
-  redirect_url = frappe.utils.get_url(callback_url)
-  redirect_url = urllib.parse.quote_plus(redirect_url)
+  # redirect_url = frappe.utils.get_url(callback_url)
+  # redirect_url = urllib.parse.quote_plus(redirect_url)
 
-  frappe.local.response['type'] = 'redirect'
-  frappe.local.response['location'] = 'https://open.larksuite.com/open-apis/authen/v1/index?redirect_uri=' + redirect_url + '&app_id=' + lark_settings.app_id
+  # frappe.local.response['type'] = 'redirect'
+  # frappe.local.response['location'] = 'https://open.larksuite.com/open-apis/authen/v1/index?redirect_uri=' + redirect_url + '&app_id=' + lark_settings.app_id
   return
 
 # @frappe.whitelist(allow_guest=True)
