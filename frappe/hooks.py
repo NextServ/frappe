@@ -1,7 +1,7 @@
 from . import __version__ as app_version
 
 app_name = "frappe"
-app_title = "Frappe Framework (Lemonade Fork)"
+app_title = "Frappe Framework (Lemonade Fork Test)"
 app_publisher = "Frappe Technologies"
 app_description = "Full stack web framework with Python, Javascript, MariaDB, Redis, Node"
 source_link = "https://github.com/frappe/frappe"
@@ -184,10 +184,6 @@ doc_events = {
 	},
 	"Page": {
 		"on_update": "frappe.cache_manager.build_domain_restriced_page_cache",
-	},
-	"User": {
-		"after_insert": "frappe.lark.create_lark_user",
-		"on_trash": "frappe.lark.delete_lark_user"
 	}
 }
 
